@@ -1,0 +1,36 @@
+spring:
+#  h2:
+#    console:
+#      enabled: true
+
+  profiles:
+    active: prod
+    default: prod
+  datasource:
+#    #url: jdbc:mysql://localhost:3307/{project_name}?serverTimezone=Asia/Seoul
+    url: jdbc:mysql://localhost:3306/sns_feed_integration?serverTimezone=Asia/Seoul
+    username: root
+    password: 1234
+    driver-class-name: com.mysql.cj.jdbc.Driver
+  jpa:
+    defer-datasource-initialization: true
+    hibernate:
+      ddl-auto: validate
+    generate-ddl: true
+    properties:
+      hibernate:
+        format_sql: true
+  #  sql:
+  #    init:
+  #      mode: always
+  #      data-locations: classpath:db/data.sql
+
+  config:
+    import: external-api-config.yml
+
+logging:
+  level:
+    sql: trace
+
+jwt:
+  secret: c3ByaW5nLWJvb3Qtc2VjdXJpdHktand0LXdhbnRlZC1wcmUtb25ib2FyZGluZy1iYWNrZW5kLWludGVybnNoaXAtc3ByaW5nLWJvb3Qtc2VjdXJpdHktand0LXNlY3JldC1rZXkK
