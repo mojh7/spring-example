@@ -1,3 +1,8 @@
+server:
+  servlet:
+    encoding:
+      charset: UTF-8
+
 spring:
   profiles:
     active: test
@@ -11,6 +16,7 @@ spring:
       hibernate:
         format_sql: true
     show-sql: true
+
 #  config:
 #    import:
 #      - external-api-config.yml

@@ -8,7 +8,7 @@ public class TempTest {
 
     @Test
     void Test() {
-        long maxCnt = 100;
+        long maxCnt = 10000;
         long min = 1;
         long max = 5;
 
@@ -20,6 +20,10 @@ public class TempTest {
 //        float cntF = 0;
 //        double cntD = 0;
 //        long cntL = 0;
+
+        // 평점 = 총점 / 갯수
+
+        // 평점, 갯수
 
         for(int idx = 0; idx < maxCnt; idx++) {
             long currScore = (long) (Math.random() * 5 + 1);
