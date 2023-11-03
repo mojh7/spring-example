@@ -1,2 +1,14 @@
-- name: Debug Message
-  run: echo action test
+name: PR Closed Workflow
+
+on:
+  pull_request:
+    types:
+      - closed
+
+jobs:
+  pr_closed:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: PR Closed Step
+      run: echo "PR가 닫혔습니다."
