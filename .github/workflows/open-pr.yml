@@ -5,23 +5,22 @@ on:
     types: [opened, ready_for_review, reopened]
 
 jobs:
-  discord-webhook:
+  pr-notify-discord:
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout repository
-        uses: actions/checkout@v2
-
-      - name: Send discord webhook
-        uses: actions/webhooks-runner@v2
-        with:
-          url: ${{ secrets.DISCORD_WEBHOOK_URL }}
-          content: |
-            ```
-            **PR 생성/수정**
-
-            Repository: **{{ pr-info.repository.name }}**
-            Branch: **{{ pr-info.branchName }}**
-            Commit Message: **{{ pr-info.commitMessage }}**
-            Title: **{{ pr-info.title }}**
-            Sender: **{{ pr-info.sender }}**
-            ```
+      - name: Notify Discord
+        run: |
+          DISCORD_WEBHOOK_URL=$DISCORD_WEBHOOK_URL
+          JSON_DATA='{
+            "content": "This is a test message",
+            "embeds": [
+              {
+                "title": "Embed Title",
+                "description": "Embed Description"
+              }
+            ]
+          }'
+          curl -X POST \
+            -H 'Content-Type: application/json' \
+            -d "$JSON_DATA" \
+            $DISCORD_WEBHOOK_URL
