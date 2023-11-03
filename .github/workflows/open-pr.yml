@@ -10,6 +10,7 @@ jobs:
     steps:
       - name: Notify Discord
         id: notify
+        if: ${{ github.event.pull_request.open == 'true' }}
         run: |
           echo "${{ github.event.pull_request.draft }}"
           echo "${{ github.event.pull_request.state }}"
