@@ -22,4 +22,4 @@ jobs:
           curl -X POST \
             -H 'Content-Type: application/json' \
             -d "$JSON_DATA" \
-            $DISCORD
+            ${{ secrets.DISCORD }}
