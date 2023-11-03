@@ -1,30 +1,63 @@
-name: Notify on PR Status Change
+name: Discord PR Notification
 
 on:
   pull_request:
-    types:
-      - opened
-      - synchronize
+    types: [opened, ready_for_review, reopened]
 
 jobs:
-  notify_discord:
+  discord-webhook:
     runs-on: ubuntu-latest
-
     steps:
-    - name: Check PR Conditions
-      if: github.event_name == 'pull_request' && (github.event.action == 'opened' || github.event.action == 'synchronize')
-      run: |
-        PR_TITLE="${{ github.event.pull_request.title }}"
-        PR_URL="${{ github.event.pull_request.html_url }}"
-        PAYLOAD='{
-          "content": "PR 제목: '${PR_TITLE}'",
-          "embeds": [
-            {
-              "title": "PR 상세 정보",
-              "description": "PR이 열렸습니다.",
-              "url": "'${PR_URL}'",
-              "color": 16711680
-            }
-          ]
-        }'
-        curl -X POST -H "Content-Type: application/json" -d "$PAYLOAD" $DISCORD_WEBHOOK_URL
+      - name: Checkout repository
+        uses: actions/checkout@v2
+
+      - name: Get pull request information
+        id: get-pr-info
+        uses: actions/github-script@v2
+        with:
+          script: |
+            const pr = await context.github.pulls.get({
+              pull_id: context.payload.pull_id,
+            });
+
+            const repository = await context.github.repos.get({
+              owner: pr.head.repo.owner,
+              name: pr.head.repo.name,
+            });
+
+            const branchName = pr.head.ref.substring(2);
+
+            const commitMessage = pr.head.commits[0].message;
+
+            const title = pr.title;
+
+            const sender = pr.sender.login;
+
+            const result = {
+              repository,
+              branchName,
+              commitMessage,
+              title,
+              sender,
+            };
+
+            return result;
+
+        output:
+          name: pr-info
+          format: json
+
+      - name: Send discord webhook
+        uses: actions/webhooks-runner@v2
+        with:
+          url: ${{ secrets.DISCORD_WEBHOOK_URL }}
+          content: |
+            ```
+            **PR 생성/수정**
+
+            Repository: **{{ pr-info.repository.name }}**
+            Branch: **{{ pr-info.branchName }}**
+            Commit Message: **{{ pr-info.commitMessage }}**
+            Title: **{{ pr-info.title }}**
+            Sender: **{{ pr-info.sender }}**
+            ```
