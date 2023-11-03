@@ -1,0 +1,24 @@
+name: Add Test Label on PR Close
+
+on:
+  pull_request:
+    types:
+      - closed
+
+jobs:
+  add_test_label:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Check PR Status
+      id: pr_status
+      run: echo "::set-output name=is_closed::${{ github.event.pull_request.state }}"
+      shell: bash
+
+    - name: Add Test Label
+      if: steps.pr_status.outputs.is_closed == 'closed'
+      uses: actions/labeler@v4
+      with:
+        repository: ${{ github.repository }}
+        issue_number: ${{ github.event.pull_request.number }}
+        labels: test
