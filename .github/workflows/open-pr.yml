@@ -13,7 +13,7 @@ jobs:
 
       - name: Get pull request information
         id: get-pr-info
-        uses: actions/github-script@v2
+        uses: actions/github-script@v3
         with:
           script: |
             const pr = await context.github.pulls.get({
@@ -42,10 +42,6 @@ jobs:
             };
 
             return result;
-
-        output:
-          name: pr-info
-          format: json
 
       - name: Send discord webhook
         uses: actions/webhooks-runner@v2
