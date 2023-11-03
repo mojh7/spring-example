@@ -13,8 +13,8 @@ jobs:
         run: |
           echo "${{ github.event.pull_request.draft }}"
           echo "${{ github.event.pull_request.state }}"
-          echo "base: ${{ github.event.pull_request.base.ref | split("/") | first }}"
-          echo "head: ${{ github.event.pull_request.head.ref | split("/") | first }}"
+          echo "base: ${{ github.event.pull_request.base.ref }}"
+          echo "head: ${{ github.event.pull_request.head.ref }}"
           JSON_DATA='{
             "content": "📣 ${{ github.event.pull_request.user.login }} 님이 새로운 PR를 생성했습니다.",
             "embeds": [
