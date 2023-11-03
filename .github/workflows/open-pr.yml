@@ -2,7 +2,7 @@ name: Discord PR Notification
 
 on:
   pull_request:
-    types: [opened, reopened]
+    types: [opened]
 
 jobs:
   pr-notify-discord:
@@ -11,13 +11,17 @@ jobs:
       - name: Notify Discord
         id: notify
         run: |
-          echo "test: ${{ github.event.pull_request }}"
+          echo "json: ${{ github.event.pull_request | toJSON }}"
+          echo "${{ github.event.pull_request.draft }}"
+          echo "${{ github.event.pull_request.state }}"
+          echo "base: ${{ github.event.pull_request.base.ref | split("/") | first }}"
+          echo "head: ${{ github.event.pull_request.head.ref | split("/") | first }}"
           JSON_DATA='{
             "content": "📣 ${{ github.event.pull_request.user.login }} 님이 새로운 PR를 생성했습니다.",
             "embeds": [
               {
-                "title": "#${{ github.event.pull_request.number }}번 PR Title: ${{ github.event.pull_request.title }}",
-                "description": "많은 관심 부탁 드립니다." ,
+                "title": "${{ github.event.pull_request.title }}",
+                "description": "" ,
                 "color": 3368703,
                 "url": ${{ github.event.pull_request.html_url }}"
               }
