@@ -10,7 +10,7 @@ jobs:
     steps:
       - name: Notify Discord
         run: |
-          DISCORD_WEBHOOK_URL=$DISCORD_WEBHOOK_URL
+          DISCORD_WEBHOOK_URL=secrets.DISCORD
           JSON_DATA='{
             "content": "This is a test message",
             "embeds": [
