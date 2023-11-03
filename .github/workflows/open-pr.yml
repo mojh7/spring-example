@@ -8,23 +8,19 @@ jobs:
   pr-notify-discord:
     runs-on: ubuntu-latest
     steps:
-      - name: Get PR Information
-        id: pr_info
+      - name: Notify Discord
+        id: notify
         run: |
-          PR_NUMBER=${{ github.event.pull_request.number }}
-          PR_TITLE=${{ github.event.pull_request.title }}
-          PR_AUTHOR=${{ github.event.pull_request.user.login }}
-          PR_URL=${{ github.event.pull_request.html_url }}
-          echo "PR Number: $PR_NUMBER"
-          echo "PR Title: $PR_TITLE"
-          echo "PR Author: $PR_AUTHOR"
-          echo "PR URL: $PR_URL"
+          echo "PR Number: ${{ github.event.pull_request.number }}"
+          echo "PR Title: ${{ github.event.pull_request.title }}"
+          echo "PR Author: ${{ github.event.pull_request.user.login }}"
+          echo "PR URL: ${{ github.event.pull_request.html_url }}"
           JSON_DATA='{
-            "content": "New PR Information",
+            "content": "💡 새로운 PR이 생성됐습니다.",
             "embeds": [
               {
-                "title": "PR Title: ${{ PR_TITLE }}",
-                "description": "Author: ${{ PR_AUTHOR }}\nNumber: ${{ PR_NUMBER }}\nURL: ${{ PR_URL }}",
+                "title": "PR Title: ${{ github.event.pull_request.title }}",
+                "description": "Author: ${{ github.event.pull_request.user.login }}\nNumber: ${{ github.event.pull_request.number }}\nURL: ${{ github.event.pull_request.html_url }}",
                 "color": 3368703
               }
             ]
