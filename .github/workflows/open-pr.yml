@@ -2,7 +2,7 @@ name: Discord PR Notification
 
 on:
   pull_request:
-    types: [opened]
+    types: [opened, reopened]
 
 jobs:
   pr-notify-discord:
@@ -11,7 +11,6 @@ jobs:
       - name: Notify Discord
         id: notify
         run: |
-          echo "json: ${{ github.event.pull_request | toJSON }}"
           echo "${{ github.event.pull_request.draft }}"
           echo "${{ github.event.pull_request.state }}"
           echo "base: ${{ github.event.pull_request.base.ref | split("/") | first }}"
