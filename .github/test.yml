@@ -1,0 +1,30 @@
+name: Notify on PR Status Change
+
+on:
+  pull_request:
+    types:
+      - opened
+      - synchronize
+
+jobs:
+  notify_discord:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Check PR Conditions
+      if: github.event_name == 'pull_request' && (github.event.action == 'opened' || github.event.action == 'synchronize')
+      run: |
+        PR_TITLE="${{ github.event.pull_request.title }}"
+        PR_URL="${{ github.event.pull_request.html_url }}"
+        PAYLOAD='{
+          "content": "PR 제목: '${PR_TITLE}'",
+          "embeds": [
+            {
+              "title": "PR 상세 정보",
+              "description": "PR이 열렸습니다.",
+              "url": "'${PR_URL}'",
+              "color": 16711680
+            }
+          ]
+        }'
+        curl -X POST -H "Content-Type: application/json" -d "$PAYLOAD" $DISCORD_WEBHOOK_URL
