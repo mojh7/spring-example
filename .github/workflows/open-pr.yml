@@ -11,38 +11,6 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v2
 
-      - name: Get pull request information
-        id: get-pr-info
-        uses: actions/github-script@v3
-        with:
-          script: |
-            const pr = await context.github.pulls.get({
-              pull_id: context.payload.pull_id,
-            });
-
-            const repository = await context.github.repos.get({
-              owner: pr.head.repo.owner,
-              name: pr.head.repo.name,
-            });
-
-            const branchName = pr.head.ref.substring(2);
-
-            const commitMessage = pr.head.commits[0].message;
-
-            const title = pr.title;
-
-            const sender = pr.sender.login;
-
-            const result = {
-              repository,
-              branchName,
-              commitMessage,
-              title,
-              sender,
-            };
-
-            return result;
-
       - name: Send discord webhook
         uses: actions/webhooks-runner@v2
         with:
