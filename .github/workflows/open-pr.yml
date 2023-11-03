@@ -1,6 +1,8 @@
+name: Discord PR Notification
+
 on:
   pull_request:
-    types: [opened, ready_for_review]
+    types: [opened, ready_for_review, reopened]
 
 jobs:
   discord-webhook:
@@ -11,7 +13,7 @@ jobs:
 
       - name: Get pull request information
         id: get-pr-info
-        uses: actions/github-script@v3
+        uses: actions/github-script@v2
         with:
           script: |
             const pr = await context.github.pulls.get({
@@ -51,7 +53,7 @@ jobs:
           url: ${{ secrets.DISCORD_WEBHOOK_URL }}
           content: |
             ```
-            **새 PR 생성**
+            **PR 생성/수정**
 
             Repository: **{{ pr-info.repository.name }}**
             Branch: **{{ pr-info.branchName }}**
