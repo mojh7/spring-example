@@ -31,7 +31,7 @@ jobs:
           PR_LABEL: ${{ steps.label-check.outputs }}
 
       - name: Add Label to PR
-        if: ${{ env.PR_LABEL != '' }}
+        if: ${{ env.PR_LABEL }} != ''
         run: |
           label_name="${{ env.PR_LABEL }}"
           gh pr edit ${{ github.event.pull_request.number }} --add-label "$label_name"
