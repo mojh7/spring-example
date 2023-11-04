@@ -15,7 +15,7 @@ jobs:
           if [[ $pr_title == *"docs"* ]]; then
             echo "📚 docs"
           elif [[ $pr_title == *"feat"* ]]; then
-            echo "☁️ feature" >> $GITHUB_OUTPUT
+            echo "\U00002601 feature" >> $GITHUB_OUTPUT
           elif [[ $pr_title == *"fix"* ]]; then
             echo "🔨 fix"
           elif [[ $pr_title == *"refactor"* ]]; then
