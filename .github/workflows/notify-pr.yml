@@ -2,7 +2,7 @@ name: Discord PR Notification
 
 on:
   pull_request:
-    types: [opened, reopened]
+    types: [opened, ready_for_review]
     
 jobs:
   pr-notify-discord:
@@ -12,6 +12,7 @@ jobs:
       id: check
       run: |
         echo ${{ github.event.pull_request.draft }}
+        echo ${{ github.event.pull_request.state }}
         exit 1
         
     - name: Notify Discord
