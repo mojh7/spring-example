@@ -1,7 +1,8 @@
 name: Discord PR Notification
 
 on:
-  pull_request: opened
+  pull_request:
+    types: [opened]
 
 jobs:
   pr-notify-discord:
