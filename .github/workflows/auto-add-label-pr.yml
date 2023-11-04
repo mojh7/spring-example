@@ -1,4 +1,4 @@
-name: Auto Label PR
+name: PR Labeler
 
 on:
   pull_request:
@@ -9,15 +9,15 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Check PR title for labels
-        id: label-check
+        id: add-label
         run: |
           pr_title="${{ github.event.pull_request.title }}"
           if [[ $pr_title == *"docs"* ]]; then
             echo "📚 docs"
           elif [[ $pr_title == *"feat"* ]]; then
-            echo "\U00002601 feature" >> $GITHUB_OUTPUT
+            gh pr edit ${{ github.event.pull_request.number }} --add-label "\U00002601 feature"
           elif [[ $pr_title == *"fix"* ]]; then
-            echo "🔨 fix"
+            gh pr edit ${{ github.event.pull_request.number }} --add-label "🔨 fix"
           elif [[ $pr_title == *"refactor"* ]]; then
             echo "🛠 refactor"
           elif [[ $pr_title == *"setup"* ]]; then
@@ -27,11 +27,6 @@ jobs:
           elif [[ $pr_title == *"test"* ]]; then
             echo "🧪 test"
           fi
-
-      - name: Add Label to PR
-        if: ${{ steps.label-check.outputs.result }} != ''
-        run: |
-          echo ${{ steps.label-check.outputs.result }}
-          gh pr edit ${{ github.event.pull_request.number }} --add-label ${{ steps.label-check.outputs.result }}
+          
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
