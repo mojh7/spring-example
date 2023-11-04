@@ -12,8 +12,7 @@ jobs:
         id: add-label
         run: |
           pr_title="${{ github.event.pull_request.title }}"
-          git init
-          git config --global init.defaultBranch develop
+          git init --initial-branch=develop
           gh auth login --with-token <<< "${{ secrets.GITHUB_TOKEN }}"
           if [[ $pr_title == *"docs"* ]]; then
             echo "📚 docs"
