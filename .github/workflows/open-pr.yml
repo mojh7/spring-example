@@ -14,12 +14,16 @@ jobs:
         run: |
           echo "${{ github.event.pull_request.draft }}"
           echo "${{ github.event.pull_request.state }}"
+          PR_NUMBER=${{ github.event.pull_request.number }}
+          PR_TITLE=${{ github.event.pull_request.title }}
+          PR_AUTHOR=${{ github.event.pull_request.user.login }}
+          PR_URL=${{ github.event.pull_request.html_url }}
           JSON_DATA='{
-            "content": "✔️ ${{ github.event.pull_request.user.login }} 님이 ${{ github.event.pull_request.number }}번 PR를 Open했습니다.",
+            "content": "✔️ ${{ PR_AUTHOR }} 님의 새로운 ${{ PR_NUMBER }}번 PR 정보",
             "embeds": [
               {
-                "title": "${{ github.event.pull_request.title }}",
-                "description": "Branch : ${{ github.event.pull_request.base.ref }} -> ${{ github.event.pull_request.base.ref }} \n URL : ${{ github.event.pull_request.html_url }}",
+                "title": "${{ PR_TITLE }}",
+                "description": "Author: ${{ PR_AUTHOR }}\nNumber: ${{ PR_NUMBER }}\nURL: ${{ PR_URL }}",
                 "color": 3368703,
               }
             ]
