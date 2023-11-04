@@ -12,11 +12,11 @@ jobs:
         id: notify
         run: |
           JSON_DATA='{
-            "content": "💡 새로운 PR이 생성됐습니다.",
+            "content": "💡 ${{ github.event.pull_request.user.login }}님이 새로운 PR을 생성했습니다.",
             "embeds": [
               {
                 "title": "PR Title: ${{ github.event.pull_request.title }}",
-                "description": "Author: ${{ github.event.pull_request.user.login }}\nNumber: ${{ github.event.pull_request.number }}\nURL: ${{ github.event.pull_request.html_url }}",
+                "description": "Branch : ${{ github.event.pull_request.head.ref }} ➡️ ${{ github.event.pull_request.base.ref }}\nURL: ${{ github.event.pull_request.html_url }}",
                 "color": 3368703
               }
             ]
