@@ -13,6 +13,7 @@ jobs:
         run: |
           pr_title="${{ github.event.pull_request.title }}"
           git init
+          git config --global init.defaultBranch develop
           gh auth login --with-token <<< "${{ secrets.GITHUB_TOKEN }}"
           if [[ $pr_title == *"docs"* ]]; then
             echo "📚 docs"
@@ -29,6 +30,3 @@ jobs:
           elif [[ $pr_title == *"test"* ]]; then
             echo "🧪 test"
           fi
-          
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
