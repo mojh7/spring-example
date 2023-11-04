@@ -12,6 +12,8 @@ jobs:
         id: add-label
         run: |
           pr_title="${{ github.event.pull_request.title }}"
+          git init
+          gh auth login --with-token <<< "${{ secrets.GITHUB_TOKEN }}"
           if [[ $pr_title == *"docs"* ]]; then
             echo "📚 docs"
           elif [[ $pr_title == *"feat"* ]]; then
