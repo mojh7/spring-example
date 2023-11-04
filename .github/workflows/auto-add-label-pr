@@ -1,0 +1,39 @@
+name: Auto Label PR
+
+on:
+  pull_request:
+    types: [opened, reopened]
+
+jobs:
+  auto-label:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check PR title for labels
+        id: label-check
+        run: |
+          pr_title="${{ github.event.pull_request.title }}"
+          if [[ $pr_title == *"docs"* ]]; then
+            echo "📚 docs"
+          elif [[ $pr_title == *"feat"* ]]; then
+            echo "☁️ feature"
+          elif [[ $pr_title == *"fix"* ]]; then
+            echo "🔨 fix"
+          elif [[ $pr_title == *"refactor"* ]]; then
+            echo "🛠 refactor"
+          elif [[ $pr_title == *"setup"* ]]; then
+            echo "🧹 setup"
+          elif [[ $pr_title == *"style"* ]]; then
+            echo "🖌 style"
+          elif [[ $pr_title == *"test"* ]]; then
+            echo "🧪 test"
+          fi
+        env:
+          PR_LABEL: ${{ steps.label-check.outputs }}
+
+      - name: Add Label to PR
+        if: ${{ env.PR_LABEL != '' }}
+        run: |
+          label_name="${{ env.PR_LABEL }}"
+          gh pr edit ${{ github.event.pull_request.number }} --add-label "$label_name"
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
