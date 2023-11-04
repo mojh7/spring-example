@@ -14,14 +14,12 @@ jobs:
         run: |
           echo "${{ github.event.pull_request.draft }}"
           echo "${{ github.event.pull_request.state }}"
-          base=${{ github.event.pull_request.base.ref }}
-          head=${{ github.event.pull_request.head.ref }}
           JSON_DATA='{
-            "content": "📣 ${{ github.event.pull_request.user.login }} 님이 #${{ github.event.pull_request.number }} PR를 Open했습니다.",
+            "content": "📣 ${{ github.event.pull_request.user.login }} 님이 #${{ github.event.pull_request.number }}번 PR를 Open했습니다.",
             "embeds": [
               {
                 "title": "${{ github.event.pull_request.title }}",
-                "description": "${{ base }} <- ${{ head }}" ,
+                "description": "${{ github.event.pull_request.base.ref }} <- ${{ github.event.pull_request.head.ref }}" ,
                 "color": 3368703,
                 "url": ${{ github.event.pull_request.html_url }}"
               }
