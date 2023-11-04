@@ -10,6 +10,7 @@ jobs:
     steps:
     - name: Failed when draft state
       id: check
+      if: github.event.pull_request.draft == true
       run: |
         echo ${{ github.event.pull_request.draft }}
         echo ${{ github.event.pull_request.state }}
