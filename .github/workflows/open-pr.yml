@@ -10,14 +10,14 @@ jobs:
     steps:
       - name: Notify Discord
         id: notify
-        if: ${{ github.event.pull_request.open == 'true' }}
+        # if: ${{ github.event.pull_request.open == 'true' }}
         run: |
           echo "${{ github.event.pull_request.draft }}"
           echo "${{ github.event.pull_request.state }}"
           echo "base=(${{ github.event.pull_request.base.ref }})"
           echo "head=(${{ github.event.pull_request.head.ref }})"
           JSON_DATA='{
-            "content": "📣 ${{ github.event.pull_request.user.login }} 님이 새로운 PR를 생성했습니다.",
+            "content": "📣 ${{ github.event.pull_request.user.login }} 님이 #${{ github.event.pull_request.number }} PR를 Open했습니다.",
             "embeds": [
               {
                 "title": "${{ github.event.pull_request.title }}",
