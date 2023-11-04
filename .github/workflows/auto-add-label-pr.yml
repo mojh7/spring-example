@@ -27,14 +27,11 @@ jobs:
           elif [[ $pr_title == *"test"* ]]; then
             echo "🧪 test"
           fi
-        env:
-          PR_LABEL: ${{ steps.label-check.outputs.result }}
 
       - name: Add Label to PR
         if: ${{ steps.label-check.outputs.result }} != ''
         run: |
           echo ${{ steps.label-check.outputs.result }}
-          echo ${{ env.PR_LABEL }}
           gh pr edit ${{ github.event.pull_request.number }} --add-label ${{ steps.label-check.outputs.result }}
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
