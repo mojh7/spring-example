@@ -24,7 +24,7 @@ jobs:
               {
                 "title": "${{ PR_TITLE }}",
                 "description": "Author: ${{ PR_AUTHOR }}\nNumber: ${{ PR_NUMBER }}\nURL: ${{ PR_URL }}",
-                "color": 3368703,
+                "color": 3368703
               }
             ]
           }'
