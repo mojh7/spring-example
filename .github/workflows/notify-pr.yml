@@ -8,6 +8,10 @@ jobs:
   pr-notify-discord:
     runs-on: ubuntu-latest
     steps:
+      - name: Failed when draft state
+        if: github.event.pull_request.draft == 'true'
+        run: exit 1
+        
       - name: Notify Discord
         id: notify
         run: |
