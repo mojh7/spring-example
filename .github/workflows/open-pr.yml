@@ -21,7 +21,7 @@ jobs:
                 "title": "${{ github.event.pull_request.title }}",
                 "description": "${{ github.event.pull_request.base.ref }} <- ${{ github.event.pull_request.head.ref }}" ,
                 "color": 3368703,
-                "url": ${{ github.event.pull_request.html_url }}"
+                "url": "${{ github.event.pull_request.html_url }}"
               }
             ]
           }'
