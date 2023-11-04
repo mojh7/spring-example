@@ -12,12 +12,12 @@ jobs:
         if: github.event.pull_request.merged == true
         run: |
           JSON_DATA='{
-            "content": "🚀 PR #${{ github.event.pull_request.number }}가 병합되었습니다.",
+            "content": "🚀 PR #${{ github.event.pull_request.number }}번이 병합되었습니다.",
             "embeds": [
               {
                 "title": "${{ github.event.pull_request.title }}",
                 "description": "Branch : ${{ github.event.pull_request.head.ref }} -> ${{ github.event.pull_request.base.ref }}\nURL: ${{ github.event.pull_request.html_url }}",
-                "color": 8897791
+                "color": 16772825
               }
             ]
           }'
