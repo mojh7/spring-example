@@ -6,7 +6,7 @@ enable:
 # 레이블을 성공적으로 붙이고 PR에 보낼 코멘트를 설정
 comments:
   prs: |
-    PR 주제와 맞는 label을 추가하였습니다.
+    Auto add labels 📑
 
 # 레이블
 labels:
