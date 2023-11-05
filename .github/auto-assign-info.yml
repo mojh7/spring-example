@@ -4,6 +4,6 @@ addReviewers: false
 addAssignees: author
 
 
-# reviewers:
+reviewers:
 
-# numberOfReviewers: 3
+numberOfReviewers: 0
