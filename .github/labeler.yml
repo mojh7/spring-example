@@ -13,13 +13,15 @@ comments:
 labels:
   '🔨 fix':
     include:
-      - '\bfix\b'
+      - '\bfix #\b'
+      - '\bfix: \b'
   'test':
     include:
       - '\btest\b'
-  '\U00002601 feature':
+  '☁️ feature':
     include:
-      - '\bfeat\b'
+      - '\bfeat #\b'
+      - '\bfeat: \b'
   'documentation':
     include:
       - '\bdocs\b'
