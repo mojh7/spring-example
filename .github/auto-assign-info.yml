@@ -1,0 +1,9 @@
+addReviewers: false
+
+
+addAssignees: author
+
+
+# reviewers:
+
+# numberOfReviewers: 3
